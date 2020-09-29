@@ -7,7 +7,13 @@ def count_characters(string):
     Characters which with a count of 0 should not be included in the
     output dictionary.
     '''
-    pass
+    dic = dict()
+    for x in list(string):
+        if x in dic:
+            dic[x] += 1
+        else:
+            dic[x] = 1
+    return dic
 
 
 def invert_dictionary(d):
@@ -20,7 +26,13 @@ def invert_dictionary(d):
     the set of d's keys which shared the same value.
     e.g. {'a': 2, 'b': 4, 'c': 2} => {2: {'a', 'c'}, 4: {'b'}}
     '''
-    pass
+    dic = dict()
+    for k, v in d.items():
+        if v in dic:
+            dic[v].add(k)
+        else:
+            dic[v] = {k}
+    return dic
 
 
 def max_lists(list1, list2):
@@ -30,7 +42,7 @@ def max_lists(list1, list2):
     list1 and list2 have the same length. Return a list which contains the
     maximum element of each list for every index.
     '''
-    pass
+    return [max(a, b) for a, b in zip(list1, list2)]
 
 
 def get_diagonal(mat):
@@ -47,7 +59,8 @@ def get_diagonal(mat):
     get_diagonal(mat) => [1, 4]
     You may assume that the matrix is nonempty.
     '''
-    pass
+    ll = [x for x in zip(*mat)]
+    return [x[i] for i, x in enumerate(ll) if i <= len(x)-1]
 
 
 def merge_dictionaries(d1, d2):
@@ -58,7 +71,11 @@ def merge_dictionaries(d1, d2):
     their associated values. If a key is in both dictionaries, the value should
     be the sum of the two values.
     '''
-    pass
+    d3 = {**d1, **d2}
+    common_keys = set(d1.keys()) & set(d2.keys())
+    for k in common_keys:
+        d3[k] = d1[k] + d2[k]
+    return d3
 
 
 def matrix_multiplication(A, B):
@@ -77,7 +94,24 @@ def matrix_multiplication(A, B):
 
     YOU MAY NOT USE NUMPY. Write your solution in straight python.
     '''
-    pass
+    n = len(A)
+    result = []
+    # iterate over the rows of A
+    for i in range(n):
+        row = []
+        # iterate over the columns of B
+        for j in range(n):
+            total = 0
+            # iterate ith row of A with jth column of B dot product
+            for k in range(n):
+                # k implements [ith row][jth column] element-wise dot product
+                total += A[i][k] * B[k][j]
+            # column j of row i
+            row.append(total)
+        # all columns j of row i completed
+        result.append(row)
+    # all rows done
+    return result
 
 
 def get_min(*args):
@@ -88,7 +122,9 @@ def get_min(*args):
 
     In case two or more arguments are provided, returns the smallest number among args.
     """
-    pass
+    if not len(args):
+        raise ValueError
+    return min(args)
 
 
 def get_max(*args):
@@ -99,4 +135,6 @@ def get_max(*args):
 
     In case two or more arguments are provided, returns the largest number among args.
     """
-    pass
+    if not len(args):
+        raise ValueError
+    return max(args)
